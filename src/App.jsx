@@ -176,6 +176,12 @@ export default function App() {
         0% { transform: translateX(0) translateZ(0); }
         100% { transform: translateX(-50%) translateZ(0); }
       }
+      @keyframes signalRing {
+        0% { transform: translate(-50%,-50%) scale(0.6); opacity: 0.9; }
+        70% { opacity: 0.25; }
+        100% { transform: translate(-50%,-50%) scale(2.6); opacity: 0; }
+      }
+      .signal-ring { animation: signalRing 2s ease-out infinite; pointer-events: none; }
       .fade-in-up { animation: fadeInUp 0.8s ease-out both; }
       .nav-link { position: relative; }
       .nav-link::after {
@@ -414,10 +420,30 @@ export default function App() {
         {/* Right — Text */}
         <div className="flex-1 flex flex-col items-center md:items-start justify-center gap-2.5 sm:gap-3 md:gap-4 max-w-xl text-center md:text-left">
           <span
-            className="inline-block px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium text-slate-600"
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium text-slate-600"
             style={glass}
           >
-            Azure Data Engineer | Python Developer
+            <span aria-hidden="true" style={{ position: 'relative', display: 'inline-block', width: 14, height: 14, flexShrink: 0 }}>
+              <span
+                style={{
+                  position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)',
+                  width: 10, height: 10, borderRadius: '50%',
+                  background: 'radial-gradient(circle at 35% 35%, #34D399, #059669)',
+                  boxShadow: '0 0 14px rgba(16,185,129,0.36)',
+                  display: 'block',
+                }}
+              />
+              <span
+                className="signal-ring"
+                style={{
+                  position: 'absolute', left: '50%', top: '50%', width: 10, height: 10, borderRadius: '50%',
+                  background: 'radial-gradient(circle, rgba(52,211,153,0.28), rgba(16,185,129,0.08))',
+                  border: '1px solid rgba(52,211,153,0.28)',
+                  transform: 'translate(-50%,-50%)'
+                }}
+              />
+            </span>
+            <span className="leading-none">Azure Data Engineer | Python Developer</span>
           </span>
 
           <h1
@@ -456,22 +482,22 @@ export default function App() {
       ════════════════════════════════════════════════ */}
       <div className="w-full bg-slate-900 py-1 overflow-hidden" style={{ position: 'relative', transform: 'skewY(-2deg)' }}>
         <div className="flex gap-6 whitespace-nowrap" style={{ animation: 'scrollBand 40s linear infinite', display: 'inline-flex' }}>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
-          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>AMR •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Reliable •</span>
         </div>
       </div>
 
@@ -525,7 +551,7 @@ export default function App() {
               { num: '3+', label: 'Internships' },
               { num: '10+', label: 'Projects' },
               { num: '2', label: 'Patents' },
-              { num: '1', label: 'Research Paper' },
+              { num: '2+', label: 'Research Papers' },
             ].map((s) => (
               <div key={s.label} className="text-center">
                 <div className="text-xl sm:text-2xl font-extrabold text-slate-900" style={{ fontFamily: 'Syne, sans-serif' }}>
@@ -541,22 +567,52 @@ export default function App() {
       </section>
 
       {/* ════════════════════════════════════════════════
+          SCROLLING BAND
+      ════════════════════════════════════════════════ */}
+      <div className="w-full bg-slate-900 py-1 overflow-hidden" style={{ position: 'relative', transform: 'skewY(-2deg)' }}>
+        <div className="flex gap-6 whitespace-nowrap" style={{ animation: 'scrollBand 40s linear infinite', display: 'inline-flex' }}>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Efficient •</span>
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════════════
           SECTION 3 — SKILLS & EXPERTISE
       ════════════════════════════════════════════════ */}
       <section
         id="skills"
-        className="snap-section section-animate relative flex flex-col items-center justify-start px-4 sm:px-6 md:px-10 gap-4 sm:gap-6 py-16 sm:py-20"
+        className="snap-section section-animate relative flex flex-col md:flex-row items-start md:items-center justify-start px-4 sm:px-6 md:px-10 gap-6 sm:gap-8 md:gap-10 py-16 sm:py-20"
         style={{ scrollSnapAlign: 'start', minHeight: '100vh' }}
       >
-        <div className="text-center mb-1 sm:mb-2">
-          <FallbackImg src={skillsIllustration} alt="Skills illustration" wrapClass="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-2" />
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900"
-            style={{ fontFamily: 'Syne, sans-serif' }}>
-            SKILLS &amp; EXPERTISE
-          </h2>
+        {/* Left — Illustration */}
+        <div className="flex-shrink-0 flex items-center justify-center w-full md:flex-1 md:max-w-xs mb-4 md:mb-0">
+          <FallbackImg src={skillsIllustration} alt="Skills illustration" wrapClass="w-32 h-32 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-72 lg:h-72" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 w-full max-w-6xl pb-4 sm:pb-8">
+        {/* Right — Title + Skills Grid */}
+        <div className="flex-1 w-full flex flex-col gap-4 sm:gap-6">
+          <div className="text-center md:text-left">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900"
+              style={{ fontFamily: 'Syne, sans-serif' }}>
+              SKILLS &amp; EXPERTISE
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 w-full pb-4 sm:pb-8">
           {/* Col 1 — Data Engineering */}
           <GlassCard className="p-3.5 sm:p-4 md:p-5 flex flex-col gap-2 sm:gap-3">
             <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
@@ -622,8 +678,33 @@ export default function App() {
               ))}
             </div>
           </GlassCard>
+          </div>
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════
+          SCROLLING BAND
+      ════════════════════════════════════════════════ */}
+      <div className="w-full bg-slate-900 py-1 overflow-hidden" style={{ position: 'relative', transform: 'skewY(-2deg)' }}>
+        <div className="flex gap-6 whitespace-nowrap" style={{ animation: 'scrollBand 40s linear infinite', display: 'inline-flex' }}>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Performant •</span>
+        </div>
+      </div>
 
       {/* ════════════════════════════════════════════════
           SECTION 4 — FEATURED PROJECTS
@@ -671,6 +752,30 @@ export default function App() {
       </section>
 
       {/* ════════════════════════════════════════════════
+          SCROLLING BAND
+      ════════════════════════════════════════════════ */}
+      <div className="w-full bg-slate-900 py-1 overflow-hidden" style={{ position: 'relative', transform: 'skewY(-2deg)' }}>
+        <div className="flex gap-6 whitespace-nowrap" style={{ animation: 'scrollBand 40s linear infinite', display: 'inline-flex' }}>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Secure •</span>
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════════════
           SECTION 5 — EXPERIENCE & EDUCATION
       ════════════════════════════════════════════════ */}
       <section
@@ -708,10 +813,9 @@ export default function App() {
             <FallbackImg src={perfectLogo} alt="Perfect & Complete Solutions logo" wrapClass="w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full flex-shrink-0 overflow-hidden" />
             <div className="min-w-0">
               <h3 className="text-xs sm:text-sm font-bold text-slate-800">Perfect and Complete Solutions Inc</h3>
-              <p className="text-[10px] sm:text-[11px] md:text-xs text-blue-600 font-medium">Azure Cloud &amp; Data Engineer Intern, Nov 2025–April 2026, Onsite</p>
+              <p className="text-[10px] sm:text-[11px] md:text-xs text-blue-600 font-medium">Azure Cloud Data Engineer &amp; Backend Developer (FastAPI), Nov 2025–April 2026, Onsite</p>
               <p className="text-[10px] sm:text-[11px] md:text-xs text-slate-500 mt-1 leading-relaxed">
-                Developed and deployed cloud-based AI and data engineering
-                solutions using Microsoft Azure.
+                Worked as an Azure Cloud Data Engineer and Backend Developer using FastAPI. Built and maintained scalable cloud data pipelines, authored RESTful APIs, and deployed solutions on Microsoft Azure.
               </p>
             </div>
           </div>
@@ -746,6 +850,30 @@ export default function App() {
       </section>
 
       {/* ════════════════════════════════════════════════
+          SCROLLING BAND
+      ════════════════════════════════════════════════ */}
+      <div className="w-full bg-slate-900 py-1 overflow-hidden" style={{ position: 'relative', transform: 'skewY(-2deg)' }}>
+        <div className="flex gap-6 whitespace-nowrap" style={{ animation: 'scrollBand 40s linear infinite', display: 'inline-flex' }}>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Interactive •</span>
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════════════
           SECTION 6 — ACHIEVEMENTS
       ════════════════════════════════════════════════ */}
       <section
@@ -761,7 +889,7 @@ export default function App() {
           <FallbackImg src={achievementIllustration} alt="Achievement illustration" wrapClass="w-16 h-16 sm:w-20 sm:h-20 md:w-100 md:h-100 mx-auto" />
 
           {[
-            { text: 'Research Paper Published: "Sentiment Analysis using BERT..." — IT Indore, 16th National Conference' },
+            { text: 'Research Papers Published: "Sentiment Analysis using BERT..." — IT Indore, 16th National Conference & "Data Pipeline Optimization with Cloud Services"' },
             { text: 'Patent Holder: "AI-Driven Automated Triage System..."' },
             { text: 'Selected as Google Arcade Facilitator' },
             { text: 'Participated in Hackathons & Tech Meetups' },
@@ -779,7 +907,7 @@ export default function App() {
         <div className="flex-1 grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
           {[
             { num: '2', label: 'Patents', color: 'rgba(91,141,238,0.12)', glow: 'rgba(91,141,238,0.25)' },
-            { num: '1', label: 'Research Paper', color: 'rgba(168,85,247,0.12)', glow: 'rgba(168,85,247,0.25)' },
+            { num: '2+', label: 'Research Papers', color: 'rgba(168,85,247,0.12)', glow: 'rgba(168,85,247,0.25)' },
             { num: '4+', label: 'Hackathons', color: 'rgba(45,212,191,0.12)', glow: 'rgba(45,212,191,0.25)' },
             { num: '1', label: 'Google Facilitator', color: 'rgba(251,146,60,0.14)', glow: 'rgba(251,146,60,0.25)' },
           ].map((s) => (
@@ -787,6 +915,30 @@ export default function App() {
           ))}
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════
+          SCROLLING BAND
+      ════════════════════════════════════════════════ */}
+      <div className="w-full bg-slate-900 py-1 overflow-hidden" style={{ position: 'relative', transform: 'skewY(-2deg)' }}>
+        <div className="flex gap-6 whitespace-nowrap" style={{ animation: 'scrollBand 40s linear infinite', display: 'inline-flex' }}>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+          <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white" style={{ fontFamily: 'Syne, sans-serif' }}>Scalable •</span>
+        </div>
+      </div>
 
       {/* ════════════════════════════════════════════════
           SECTION 7 — CONTACT
