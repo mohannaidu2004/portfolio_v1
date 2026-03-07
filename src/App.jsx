@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import {
   Phone, Mail, Link as LinkIcon, MapPin, Trophy, ChevronDown,
   Code2, Database, Globe, Wrench, Briefcase, GraduationCap,
-  Award, MessageSquare, Menu, X
+  Award, MessageSquare, Menu, X, ChevronLeft, ChevronRight
 } from 'lucide-react'
 
 // ── Image Imports ──────────────────────────────────────────
@@ -12,10 +12,10 @@ import pythonIcon from './assets/images/python-icon.png'
 import azureIcon from './assets/images/azure-icon.png'
 import sqlIcon from './assets/images/sql-icon.png'
 import heroOrb1 from './assets/images/orb-blue.png'
-import departmentImg from './assets/images/project-department.png'
-import dashboardImg from './assets/images/project-dashboard.png'
-import ecommerceImg from './assets/images/project-ecommerce.png'
-import automationImg from './assets/images/project-automation.png'
+import threyaMockup from './assets/images/threya-mockup.png?format=webp&quality=78&w=960'
+import departMockup from './assets/images/depart-mockup.png?format=webp&quality=78&w=960'
+import n8nMockup from './assets/images/n8n-mockup.png?format=webp&quality=78&w=960'
+import dashMockup from './assets/images/dash-mockup.png?format=webp&quality=78&w=960'
 import nighatechLogo from './assets/images/nighatech-logo.png'
 import perfectLogo from './assets/images/perfect-logo.png'
 import nriLogo from './assets/images/nri-logo.png'
@@ -180,6 +180,14 @@ export default function App() {
         0% { transform: translate(-50%,-50%) scale(0.6); opacity: 0.9; }
         70% { opacity: 0.25; }
         100% { transform: translate(-50%,-50%) scale(2.6); opacity: 0; }
+      }
+      @keyframes slideInLeft {
+        from { opacity: 0; transform: translateX(-28px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+      @keyframes floatImg {
+        0%, 100% { transform: translateY(0px) scale(1.08); }
+        50%       { transform: translateY(-10px) scale(1.08); }
       }
       .signal-ring { animation: signalRing 2s ease-out infinite; pointer-events: none; }
       .fade-in-up { animation: fadeInUp 0.8s ease-out both; }
@@ -707,49 +715,9 @@ export default function App() {
       </div>
 
       {/* ════════════════════════════════════════════════
-          SECTION 4 — FEATURED PROJECTS
+          SECTION 4 — FEATURED PROJECTS (Swipe Cards)
       ════════════════════════════════════════════════ */}
-      <section
-        id="projects"
-        className="snap-section section-animate relative flex flex-col items-center justify-start px-4 sm:px-6 md:px-10 gap-4 sm:gap-6 py-16 sm:py-20"
-        style={{ scrollSnapAlign: 'start', minHeight: '100vh' }}
-      >
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 text-center"
-          style={{ fontFamily: 'Syne, sans-serif' }}>
-          FEATURED PROJECTS
-        </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 w-full max-w-6xl pb-4 sm:pb-8">
-          {[
-            {
-              img: departmentImg,
-              title: 'Department Website',
-              desc: 'Animated building, profiles, rolebased & varmmerce, emulets profiles.',
-              tags: ['React', 'Django'],
-            },
-            {
-              img: dashboardImg,
-              title: 'SQL Sales Dashboard',
-              desc: 'Power BI, SQL, real-time insights, APIs.',
-              tags: ['Power BI', 'SQL', 'APIs'],
-            },
-            {
-              img: ecommerceImg,
-              title: 'E-commerce GM Cart',
-              desc: 'Multi-vendor vinessir, aconrmess, shopping kart, dashboards.',
-              tags: ['Django', 'Bootstrap 5', 'multi-vendor'],
-            },
-            {
-              img: automationImg,
-              title: 'Workflow Automation n8n',
-              desc: 'Automated job emails, analytics and connected links.',
-              tags: ['n8n', 'WhatsApp', 'Telegram'],
-            },
-          ].map((proj) => (
-            <ProjectCard key={proj.title} {...proj} />
-          ))}
-        </div>
-      </section>
+      <SwipeProjects containerRef={containerRef} />
 
       {/* ════════════════════════════════════════════════
           SCROLLING BAND
@@ -1032,47 +1000,384 @@ export default function App() {
 
 // ── Sub-Components ───────────────────────────────────────
 
-function ProjectCard({ img, title, desc, tags }) {
-  const [hovered, setHovered] = useState(false)
+// Project data lives outside component — static, never recreated
+const PROJECTS = [
+  {
+    img: threyaMockup,
+    title: 'Threya Sindhoor',
+    subtitle: 'Client Requested Project',
+    desc: 'Built a complete web application for a traditional sindhoor brand with modern UI, product showcase, and seamless shopping experience.',
+    tags: ['React', 'FastAPI'],
+    link: 'https://github.com/mohannaidu2004/Threya.git',
+    accentColor: '#87ceeb',
+    accentEnd: '#4a90d9',
+    cardBg: '#ffffff',
+    cardBgSolid: '#ffffff',
+  },
+  {
+    img: departMockup,
+    title: 'Department Portal',
+    subtitle: 'AI & ML Dept — NRI Institute of Technology',
+    desc: 'Contributed to building the official AI & ML department portal with student profiles, faculty info, events, and department resources.',
+    tags: ['Bootstrap', 'Django'],
+    link: 'https://github.com/mohannaidu2004/Department_web.git',
+    accentColor: '#87ceeb',
+    accentEnd: '#4a90d9',
+    cardBg: '#ffffff',
+    cardBgSolid: '#ffffff',
+  },
+  {
+    img: n8nMockup,
+    title: 'n8n Automations',
+    subtitle: 'Self Interest — Workflow Automation',
+    desc: 'Automated daily tasks and workflows using n8n to make daily and work life easier with connected integrations.',
+    tags: ['n8n', 'Automation'],
+    link: 'https://github.com/mohannaidu2004/Smart-Job-Referral-Mail-Automation----n8n.git',
+    accentColor: '#87ceeb',
+    accentEnd: '#4a90d9',
+    cardBg: '#ffffff',
+    cardBgSolid: '#ffffff',
+  },
+  {
+    img: dashMockup,
+    title: 'SQL Dashboards',
+    subtitle: 'Skill Development — Data Analytics',
+    desc: 'Built interactive SQL dashboards to improve skills on SQL and database-related technologies using PostgreSQL.',
+    tags: ['PostgreSQL', 'SQL'],
+    link: '#',
+    accentColor: '#87ceeb',
+    accentEnd: '#4a90d9',
+    cardBg: '#ffffff',
+    cardBgSolid: '#ffffff',
+  },
+]
+
+function SwipeProjects({ containerRef }) {
+  const sectionRef = useRef(null)
+  const cardStackRef = useRef(null)
+  const activeIndexRef = useRef(0)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const transitioningRef = useRef(false)
+  const inViewRef = useRef(false)
+  const touchStartY = useRef(0)
+
+  const go = useCallback((idx) => {
+    if (transitioningRef.current) return
+    if (idx < 0 || idx >= PROJECTS.length) return
+    transitioningRef.current = true
+    activeIndexRef.current = idx
+    setActiveIndex(idx)
+    setTimeout(() => { transitioningRef.current = false }, 700)
+  }, [])
+
+  // Track section visibility
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        inViewRef.current = entry.isIntersecting
+        if (!entry.isIntersecting) {
+          activeIndexRef.current = 0
+          setActiveIndex(0)
+        }
+      },
+      { threshold: 0.6 }
+    )
+    obs.observe(section)
+    return () => obs.disconnect()
+  }, [])
+
+  // Desktop: wheel event to cycle cards
+  useEffect(() => {
+    const container = containerRef?.current
+    if (!container) return
+    const onWheel = (e) => {
+      if (!inViewRef.current || transitioningRef.current) return
+      const idx = activeIndexRef.current
+      if (e.deltaY > 0 && idx < PROJECTS.length - 1) {
+        e.preventDefault()
+        go(idx + 1)
+      } else if (e.deltaY < 0 && idx > 0) {
+        e.preventDefault()
+        go(idx - 1)
+      }
+    }
+    container.addEventListener('wheel', onWheel, { passive: false })
+    return () => container.removeEventListener('wheel', onWheel)
+  }, [containerRef, go])
+
+  // Mobile: touch swipe on card stack
+  useEffect(() => {
+    const el = cardStackRef.current
+    if (!el) return
+    const onTouchStart = (e) => { touchStartY.current = e.touches[0].clientY }
+    const onTouchMove = (e) => {
+      if (transitioningRef.current) return
+      const deltaY = touchStartY.current - e.touches[0].clientY
+      const idx = activeIndexRef.current
+      if ((deltaY > 30 && idx < PROJECTS.length - 1) || (deltaY < -30 && idx > 0)) {
+        e.preventDefault()
+      }
+    }
+    const onTouchEnd = (e) => {
+      if (transitioningRef.current) return
+      const deltaY = touchStartY.current - e.changedTouches[0].clientY
+      const idx = activeIndexRef.current
+      if (deltaY > 50 && idx < PROJECTS.length - 1) go(idx + 1)
+      else if (deltaY < -50 && idx > 0) go(idx - 1)
+    }
+    el.addEventListener('touchstart', onTouchStart, { passive: true })
+    el.addEventListener('touchmove', onTouchMove, { passive: false })
+    el.addEventListener('touchend', onTouchEnd, { passive: true })
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart)
+      el.removeEventListener('touchmove', onTouchMove)
+      el.removeEventListener('touchend', onTouchEnd)
+    }
+  }, [go])
+
   return (
-    <div
-      className="flex flex-col overflow-hidden transition-all duration-300"
-      style={{
-        ...glass,
-        borderRadius: 20,
-        minHeight: 240,
-        ...(hovered && { transform: 'scale(1.02)', boxShadow: '0 14px 44px rgba(91,141,238,0.16)' }),
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <section
+      ref={sectionRef}
+      id="projects"
+      className="snap-section section-animate relative flex flex-col items-center justify-center px-4 sm:px-6 md:px-10 gap-4 sm:gap-5 py-14"
+      style={{ scrollSnapAlign: 'start', minHeight: '100vh' }}
     >
-      {/* Image */}
-      <div className="relative overflow-hidden" style={{ height: 140, borderRadius: '20px 20px 0 0' }}>
-        <FallbackImg
-          src={img}
-          alt={title}
-          wrapClass="w-full h-full"
-          className="w-full h-full object-cover transition-transform duration-500"
-          style={hovered ? { transform: 'scale(1.08)' } : {}}
-        />
-      </div>
-      {/* Content */}
-      <div className="flex-1 p-3 sm:p-4 flex flex-col gap-1.5 sm:gap-2">
-        <h3 className="text-xs sm:text-sm font-bold text-slate-800" style={{ fontFamily: 'Syne, sans-serif' }}>{title}</h3>
-        <p className="text-[10px] sm:text-[11px] md:text-xs text-slate-500 leading-relaxed" style={{ fontFamily: 'DM Sans, sans-serif' }}>{desc}</p>
-        <div className="flex flex-wrap gap-1 sm:gap-1.5 mt-auto">
-          {tags.map((t) => (
-            <span
-              key={t}
-              className="px-2 py-0.5 text-[9px] sm:text-[10px] font-medium rounded-full text-blue-700"
-              style={{ background: 'rgba(91,141,238,0.10)' }}
+      <h2
+        className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 text-center"
+        style={{ fontFamily: 'Syne, sans-serif' }}
+      >
+        FEATURED PROJECTS
+      </h2>
+
+      {/* Card Stack */}
+      <div
+        ref={cardStackRef}
+        className="relative w-full"
+        style={{ height: 'clamp(380px, 65vh, 580px)', maxWidth: 'calc(100vw - 32px)', marginLeft: 'auto', marginRight: 'auto' }}
+      >
+        {PROJECTS.map((proj, i) => {
+          const state = i < activeIndex ? 'swiped' : i === activeIndex ? 'active' : 'upcoming'
+          const offset = i - activeIndex
+
+          return (
+            <div
+              key={proj.title}
+              className="absolute inset-0"
+              style={{
+                transition: 'transform 650ms cubic-bezier(0.4,0,0.2,1), opacity 650ms ease',
+                zIndex: state === 'active' ? 20 : state === 'swiped' ? 5 : Math.max(1, 15 - offset),
+                transform:
+                  state === 'swiped'
+                    ? 'translateX(-115%) rotate(-10deg) scale(0.88)'
+                    : state === 'active'
+                    ? 'translateX(0) rotate(0deg) scale(1)'
+                    : `translateY(${Math.min(offset, 3) * 16}px) scale(${1 - Math.min(offset, 3) * 0.04})`,
+                opacity: state === 'swiped' ? 0 : state === 'active' ? 1 : Math.max(0, 1 - offset * 0.35),
+                pointerEvents: state === 'active' ? 'auto' : 'none',
+              }}
             >
-              {t}
-            </span>
+              {/* Card shell */}
+              <div
+                className="w-full h-full flex items-stretch overflow-hidden"
+                style={{
+                  borderRadius: 24,
+                  background: '#ffffff',
+                  border: '1px solid rgba(15,23,42,0.04)',
+                  boxShadow: state === 'active'
+                    ? '0 28px 70px rgba(2,6,23,0.08), 0 8px 28px rgba(2,6,23,0.06)'
+                    : '0 8px 24px rgba(2,6,23,0.04)',
+                }}
+              >
+                {/* ── LEFT: Text ───────────────────────────── */}
+                <div
+                  className="w-full md:w-auto flex flex-col justify-center gap-2 sm:gap-3 md:gap-4 p-4 sm:p-5 md:p-8 lg:p-10 relative overflow-hidden"
+                  style={{ flex: state === 'active' ? '0 0 100% md:54%' : '0 0 54%', minWidth: 0 }}
+                >
+                  {/* Left accent bar */}
+                  <div
+                    className="absolute left-0 top-12 bottom-12 w-1.5 rounded-r-full"
+                    style={{ background: `linear-gradient(to bottom, ${proj.accentColor}, ${proj.accentEnd})` }}
+                  />
+
+                  {/* Watermark project number */}
+                  <span
+                    className="absolute select-none pointer-events-none leading-none"
+                    style={{
+                      fontFamily: 'Syne, sans-serif',
+                      fontWeight: 800,
+                      fontSize: 'clamp(72px, 10vw, 110px)',
+                      opacity: 0.055,
+                      right: 20,
+                      bottom: -8,
+                      color: proj.accentColor,
+                    }}
+                  >
+                    0{i + 1}
+                  </span>
+
+                  {/* Content — re-keyed so entrance animation fires on every card change */}
+                  <div
+                    key={`content-${activeIndex}`}
+                    style={{ animation: state === 'active' ? 'slideInLeft 0.5s ease-out both' : 'none' }}
+                  >
+                    <p
+                      className="text-[9px] sm:text-xs md:text-[11px] font-bold uppercase tracking-widest mb-1 sm:mb-2"
+                      style={{ color: proj.accentColor, fontFamily: 'DM Sans, sans-serif' }}
+                    >
+                      {proj.subtitle}
+                    </p>
+                    <h3
+                      className="text-base sm:text-lg md:text-2xl lg:text-[1.75rem] font-extrabold text-slate-900 mb-1 sm:mb-2 leading-tight"
+                      style={{ fontFamily: 'Syne, sans-serif' }}
+                    >
+                      {proj.title}
+                    </h3>
+                    <p
+                      className="text-[10px] sm:text-xs md:text-sm text-slate-500 leading-relaxed mb-2 sm:mb-3 md:mb-4"
+                      style={{ fontFamily: 'DM Sans, sans-serif' }}
+                    >
+                      {proj.desc}
+                    </p>
+                    <div className="flex flex-wrap gap-1 sm:gap-1.5 md:gap-2 mb-2 sm:mb-3 md:mb-5">
+                      {proj.tags.map((t, ti) => (
+                        <span
+                          key={t}
+                          className="px-2 sm:px-3 py-0.5 sm:py-1 text-[8px] sm:text-[10px] md:text-xs font-semibold rounded-full"
+                          style={{
+                            background: `${proj.accentColor}18`,
+                            color: proj.accentColor,
+                            border: `1px solid ${proj.accentColor}30`,
+                            animation: state === 'active' ? `fadeInUp 0.5s ease-out ${0.15 + ti * 0.08}s both` : 'none',
+                          }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <a
+                      href={proj.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 sm:gap-1.5 md:gap-2 text-[9px] sm:text-xs md:text-sm font-semibold px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-2.5 rounded-full no-underline transition-all duration-200 hover:scale-105 w-fit"
+                      style={{
+                        background: proj.accentColor,
+                        color: '#fff',
+                        fontFamily: 'DM Sans, sans-serif',
+                        boxShadow: `0 4px 16px ${proj.accentColor}45`,
+                        animation: state === 'active' ? 'fadeInUp 0.5s ease-out 0.3s both' : 'none',
+                      }}
+                    >
+                      <LinkIcon size={11} className="sm:w-4 sm:h-4" />
+                      <span className="hidden sm:inline">View Project</span>
+                      <span className="sm:hidden">Link</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* ── RIGHT: Mockup — no padding, touches right border ── */}
+                <div
+                  className="hidden md:block relative overflow-hidden"
+                  style={{ flex: '0 0 46%' }}
+                >
+                  {/* Soft gradient blend on the left edge of the image panel */}
+                  <div
+                    className="absolute inset-y-0 left-0 z-10 pointer-events-none"
+                    style={{ width: 80, background: `linear-gradient(to right, ${proj.cardBgSolid}, transparent)` }}
+                  />
+                  <img
+                    src={proj.img}
+                    alt={proj.title}
+                    loading="eager"
+                    decoding="async"
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '110%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      objectPosition: 'right center',
+                      filter: 'drop-shadow(-6px 4px 20px rgba(0,0,0,0.12))',
+                      animation: state === 'active' ? 'floatImg 5s ease-in-out infinite' : 'none',
+                    }}
+                  />
+                </div>
+
+                {/* Mobile: clear mockup image display on right side */}
+                <div className="md:hidden absolute top-0 right-0 w-2/5 sm:w-1/3 h-full overflow-hidden pointer-events-none" style={{ opacity: state === 'active' ? 0.35 : 0.2 }}>
+                  <img
+                    src={proj.img}
+                    alt=""
+                    aria-hidden
+                    loading="eager"
+                    decoding="async"
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'contain', 
+                      objectPosition: 'right center',
+                      filter: 'none',
+                      backfaceVisibility: 'hidden',
+                      WebkitFontSmoothing: 'antialiased',
+                      imageRendering: 'crisp-edges'
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Navigation: prev/dots/next */}
+      <div className="flex items-center gap-2 sm:gap-3 md:gap-4 mt-3 sm:mt-4">
+        <button
+          onClick={() => go(activeIndex - 1)}
+          disabled={activeIndex === 0}
+          className="p-1.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 disabled:opacity-30 hover:scale-110 cursor-pointer disabled:cursor-not-allowed"
+          style={{ background: 'rgba(255,255,255,0.9)', border: '1px solid rgba(2,6,23,0.08)' }}
+          aria-label="Previous project"
+        >
+          <ChevronLeft size={16} className="sm:w-5 sm:h-5" />
+        </button>
+
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          {PROJECTS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => go(i)}
+              className="rounded-full transition-all duration-300 cursor-pointer"
+              style={{
+                width: i === activeIndex ? 20 : 6,
+                height: 6,
+                background: i === activeIndex ? PROJECTS[activeIndex].accentColor : 'rgba(91,141,238,0.30)',
+                border: 'none',
+                padding: 0,
+              }}
+              aria-label={`Go to project ${i + 1}`}
+            />
           ))}
         </div>
+
+        <button
+          onClick={() => go(activeIndex + 1)}
+          disabled={activeIndex === PROJECTS.length - 1}
+          className="p-1.5 sm:p-2 md:p-2.5 rounded-full transition-all duration-200 disabled:opacity-30 hover:scale-110 cursor-pointer disabled:cursor-not-allowed"
+          style={{ background: 'rgba(255,255,255,0.9)', border: '1px solid rgba(2,6,23,0.08)' }}
+          aria-label="Next project"
+        >
+          <ChevronRight size={16} className="sm:w-5 sm:h-5" />
+        </button>
       </div>
-    </div>
+
+      <p
+        className="text-[8px] sm:text-[10px] md:text-xs text-slate-400 text-center px-4"
+        style={{ fontFamily: 'DM Sans, sans-serif' }}
+      >
+        Scroll or use arrows &middot; {activeIndex + 1} / {PROJECTS.length}
+      </p>
+    </section>
   )
 }
 
